@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PlayerManagerMVC
+namespace PlayerManagerMVC.Models
 {
     public class Player : IComparable<Player>
     {
@@ -12,6 +12,7 @@ namespace PlayerManagerMVC
             Name = name;
             Score = score;
         }
+
         public int CompareTo(Player other)
         {
             return other.Score.CompareTo(Score);
