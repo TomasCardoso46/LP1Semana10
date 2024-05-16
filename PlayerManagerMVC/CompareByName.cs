@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PlayerManagerMVC
+namespace PlayerManagerMVC.Models
 {
     public class CompareByName : IComparer<Player>
     {
