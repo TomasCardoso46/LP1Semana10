@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using PlayerManagerMVC.Controllers;
 
 namespace PlayerManagerMVC
 {
@@ -8,11 +8,7 @@ namespace PlayerManagerMVC
     {
         static void Main(string[] args)
         {
-            List<Player> players = new List<Player>
-            {
-                new Player("Player1", 100),
-                new Player("Player2", 200)
-            };
+            var playerController = new PlayerController();
 
             bool running = true;
             while (running)
@@ -21,23 +17,36 @@ namespace PlayerManagerMVC
                 Console.WriteLine("1. Inserir jogador");
                 Console.WriteLine("2. Listar todos os jogadores");
                 Console.WriteLine("3. Listar jogadores com Score maior que um valor indicado");
-                Console.WriteLine("4. Sair");
+                Console.WriteLine("4. Listar jogadores por nome (ascendente)");
+                Console.WriteLine("5. Listar jogadores por nome (descendente)");
+                Console.WriteLine("6. Sair");
 
-                Console.Write("Escolha uma opçao: ");
+                Console.Write("Escolha uma opção: ");
                 string choice = Console.ReadLine();
 
                 switch (choice)
                 {
                     case "1":
-                        InsertPlayer(players);
+                        Console.Write("Nome do jogador: ");
+                        string name = Console.ReadLine();
+                        Console.Write("Pontuação do jogador: ");
+                        int score = Convert.ToInt32(Console.ReadLine());
+                        playerController.InsertPlayer(name, score);
+                        Console.WriteLine("Jogador adicionado!");
                         break;
                     case "2":
-                        ListAllPlayers(players);
+                        ListAllPlayers(playerController.GetAllPlayers());
                         break;
                     case "3":
-                        ListPlayersWithScoreGreaterThan(players);
+                        ListPlayersWithScoreGreaterThan(playerController);
                         break;
                     case "4":
+                        ListPlayersByName(playerController, ascending: true);
+                        break;
+                    case "5":
+                        ListPlayersByName(playerController, ascending: false);
+                        break;
+                    case "6":
                         running = false;
                         break;
                     default:
@@ -47,84 +56,35 @@ namespace PlayerManagerMVC
 
             }
         }
-        static void InsertPlayer(List<Player> players)
-        {
-            Console.Write("Nome do jogador: ");
-            string name = Console.ReadLine();
-            Console.Write("Pontuaçao do jogador: ");
-            int score = Convert.ToInt32(Console.ReadLine());
 
-            players.Add(new Player(name, score));
-            Console.WriteLine("Jogador adicionado!");
-        }        
         static void ListAllPlayers(List<Player> players)
         {
-            players.Sort();
-
             Console.WriteLine("\nLista de todos os jogadores:");
             foreach (var player in players)
             {
-                string playerName = player.Name;
-                int playerScore = player.Score;
-                Console.WriteLine($"Nome: {playerName}, Score: {playerScore}");
+                Console.WriteLine($"Nome: {player.Name}, Score: {player.Score}");
             }
         }
-        static void ListPlayersWithScoreGreaterThan(List<Player> players)
+
+        static void ListPlayersWithScoreGreaterThan(PlayerController playerController)
         {
             Console.Write("Digite o valor do Score mínimo: ");
             int minScore = Convert.ToInt32(Console.ReadLine());
 
-            List<Player> playersWithScoreGreaterThan = GetPlayersWithScoreGreaterThan(players, minScore);
-            playersWithScoreGreaterThan.Sort();
-
-            Console.WriteLine($"\nJogadores com Score maior que {minScore}:");
-            foreach (var player in playersWithScoreGreaterThan)
-            {
-                string playerName = player.Name;
-                int playerScore = player.Score;
-                Console.WriteLine($"Nome: {playerName}, Score: {playerScore}");
-            }
+            var players = playerController.GetPlayersWithScoreGreaterThan(minScore);
+            ListAllPlayers(players);
         }
-        static void ListPlayersByNameAscending(List<Player> players)
-        {
-            players.Sort(new CompareByName(true));
 
-            Console.WriteLine("\nLista de jogadores por nome (ascendente):");
+        static void ListPlayersByName(PlayerController playerController, bool ascending)
+        {
+            var players = playerController.GetPlayersSortedByName(ascending);
+
+            string order = ascending ? "ascendente" : "descendente";
+            Console.WriteLine($"\nLista de jogadores por nome ({order}):");
             foreach (var player in players)
             {
-                string playerName = player.Name;
-                int playerScore = player.Score;
-                Console.WriteLine($"Nome: {playerName}, Score: {playerScore}");
+                Console.WriteLine($"Nome: {player.Name}, Score: {player.Score}");
             }
         }
-        static void ListPlayersByNameDescending(List<Player> players)
-        {
-            players.Sort(new CompareByName(false));
-
-            Console.WriteLine("\nLista de jogadores por nome (descendente):");
-            foreach (var player in players)
-            {
-                string playerName = player.Name;
-                int playerScore = player.Score;
-                Console.WriteLine($"Nome: {playerName}, Score: {playerScore}");
-            }
-        }
-        static List<Player> GetPlayersWithScoreGreaterThan(List<Player> players, int minScore)
-        {
-            List<Player> filteredPlayers = new List<Player>();
-            foreach (var player in players)
-            {
-                if (player.Score > minScore)
-                {
-                    filteredPlayers.Add(player);
-                }
-            }
-            return filteredPlayers;
-        }
-
-
-
-
-
     }
 }
