@@ -7,10 +7,16 @@ namespace GuessTheNumber
 {
     public interface IView
     {
-        HigherNumber();
+        void StartMessage();
 
-        LowerNumber();
+        void TakeAGuess();
+        
+        void HigherNumber();
 
-        CorrectNumber();
+        void LowerNumber();
+
+        void CorrectNumber();
+
+        void EndMessage();
     }
 }
