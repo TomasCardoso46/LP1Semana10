@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 namespace GuessTheNumber
 {
     public class Program
     {
         private static void Main()
         {
-           
-
             // Generate a random number
             Random random = new Random();
 
