@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace GuessTheNumber
 {
-    public class Program
+    public class Model
     {
         private static void Main()
         {

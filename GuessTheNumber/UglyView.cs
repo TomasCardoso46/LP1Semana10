@@ -7,9 +7,13 @@ namespace GuessTheNumber
 {
     public class UglyView : IView
     {
+        int guess = 0;
         
-
-
+    
+    public void ReadNumber()
+        {
+            guess = Convert.ToInt32(Console.ReadLine());
+        }
     public void StartMessage()
         {
             Console.WriteLine("Welcome to Guess the Number!");

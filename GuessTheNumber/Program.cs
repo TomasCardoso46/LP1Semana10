@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Threading.Tasks;
 namespace GuessTheNumber
@@ -16,15 +17,15 @@ namespace GuessTheNumber
 
                 if (guess == targetNumber)
                 {
-                    
+                    view.CorrectNumber();
                 }
                 else if (guess < targetNumber)
                 {
-                    
+                    view.LowerNumber();
                 }
                 else
                 {
-                    
+                    view.HigherNumber();
                 }
             }
 
