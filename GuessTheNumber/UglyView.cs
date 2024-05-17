@@ -7,7 +7,7 @@ namespace GuessTheNumber
 {
     public class UglyView : IView
     {
-        private readonly Controller controller;
+        
 
 
     public void StartMessage()
