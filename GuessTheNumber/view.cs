@@ -7,6 +7,7 @@ namespace GuessTheNumber
 {
     public interface IView
     {
+        void ReadNumber();
         void StartMessage();
 
         void TakeAGuess();
